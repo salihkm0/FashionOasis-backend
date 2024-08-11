@@ -7,7 +7,6 @@ import adminRouter from "../routes/adminRoutes.js";
 import sellerRouter from "../routes/sellerRoutes.js";
 import cookieParser from "cookie-parser";
 import paymentRouter from "../routes/paymentRoutes.js";
-// import currentUserRouter from "../routes/currentUserRoutes.js";
 import passport from 'passport';
 import session from 'express-session';
 import passportConfig from '../config/passport.js';
@@ -18,7 +17,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 connect();
 const corsOptions = {
-  origin: ["http://localhost:5174","https://fashion-oasis-frontend.vercel.app","http://localhost:5555"],
+  origin: ["http://localhost:5173","https://fashion-oasis-frontend.vercel.app"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
