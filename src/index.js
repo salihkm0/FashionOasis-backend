@@ -30,6 +30,12 @@ app.use(
     secret: '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',
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      secure: true, // Ensures the cookie is only sent over HTTPS
+      httpOnly: true, // Prevents JavaScript from accessing the cookie
+      sameSite: 'strict', // Prevents the cookie from being sent with cross-site requests
+      // maxAge: 24 * 60 * 60 * 1000, // 1 day
+    }
   })
 );
 
