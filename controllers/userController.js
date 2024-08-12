@@ -74,7 +74,12 @@ export const signup = async (req, res) => {
     const token = userToken(newUserCreated);
 
     //save token in cookie
-    res.cookie("token", token);
+    res.cookie('token', token, {
+      httpOnly: true, // Ensures the cookie is not accessible via JavaScript
+      secure: true,   // Ensures the cookie is only sent over HTTPS
+      sameSite: 'strict', // Helps prevent CSRF attacks
+      // maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+    });
     res.json({
       message: "Signed successfully!",
       success: true,
@@ -136,7 +141,12 @@ export const signin = async (req, res) => {
     const token = userToken(user);
 
     //save token in cookie
-    res.cookie("token", token);
+    res.cookie('token', token, {
+      httpOnly: true, // Ensures the cookie is not accessible via JavaScript
+      secure: true,   // Ensures the cookie is only sent over HTTPS
+      sameSite: 'strict', // Helps prevent CSRF attacks
+      // maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+    });
     res.json({
       message: "Logged in!",
       success: true,
