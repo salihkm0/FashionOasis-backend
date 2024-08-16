@@ -77,7 +77,7 @@ export const signup = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true, // Ensures the cookie is not accessible via JavaScript
       secure: true,   // Ensures the cookie is only sent over HTTPS
-      sameSite: 'strict', // Helps prevent CSRF attacks
+      // sameSite: 'strict', // Helps prevent CSRF attacks
       // maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
     });
     res.json({
@@ -144,7 +144,7 @@ export const signin = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true, // Ensures the cookie is not accessible via JavaScript
       secure: true,   // Ensures the cookie is only sent over HTTPS
-      sameSite: 'strict', // Helps prevent CSRF attacks
+      // sameSite: 'strict', // Helps prevent CSRF attacks
       // maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
     });
     res.json({
@@ -365,3 +365,14 @@ export const getUserByIdAndRole = async (req, res) => {
   }
 };
 
+
+
+export const sellerRequest = async (req,res) => {
+  try {
+    const userId = req.user.data;
+    await User.findByIdAndUpdate(userId, { role: 'penddingSeller' });
+    res.json({ success: true, message: 'Seller request submitted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+}

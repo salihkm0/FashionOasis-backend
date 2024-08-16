@@ -19,6 +19,7 @@ import {
   deleteProduct,
   getAllProducts,
   getProductById,
+  getProductBySeller,
   updateProduct,
 } from "../controllers/productController.js";
 import {
@@ -99,6 +100,7 @@ sellerRouter.get("/product/all", getAllProducts);
 sellerRouter.delete("/product/delete/:id", authenticateSeller, deleteProduct);
 sellerRouter.put("/product/update/:id", authenticateSeller, updateProduct);
 sellerRouter.get("/product/:id", getProductById);
+sellerRouter.get("/products",authenticateSeller,getProductBySeller)
 
 sellerRouter.get("/reviews", getAllReview);
 sellerRouter.get(
@@ -106,5 +108,4 @@ sellerRouter.get(
   authenticateSeller,
   getReviewByProduct
 );
-
 export default sellerRouter;

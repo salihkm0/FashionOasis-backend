@@ -191,54 +191,6 @@ export const deleteProduct = async (req, res) => {
   }
 };
 //! update product
-// export const updateProduct = async (req, res) => {
-//   console.log("Update Product Hitted");
-//   try {
-//     const { id } = req.params;
-//     console.log('update id :',req.params.id)
-//     const { isOffer,offer , price, ...updateFields } = req.body;
-
-//     // Find the product by id
-//     const product = await Product.findById(id);
-//     if (!product) {
-//       return res.status(400).json({ message: "No product found", success: false });
-//     }
-
-//     // Calculate the offer price if an offer is present
-//     let offerPrice = 0;
-//     if (isOffer && offer.type === "percentage") {
-//       offerPrice = price - (offer.value * price) / 100;
-//     } else if (isOffer && offer.type === "amount") {
-//       offerPrice = price - offer.value;
-//     }
-
-//     // Include offerPrice in the update fields if calculated
-//     if (offerPrice > 0) {
-//       updateFields.offerPrice = offerPrice;
-//     }
-
-//     // Update the product with new fields including offerPrice if present
-//     const updatedProduct = await Product.findByIdAndUpdate(id, updateFields, {
-//       new: true,
-//     });
-
-//     if (!updatedProduct) {
-//       return res.status(400).json({ message: "Product not updated", success: false });
-//     }
-
-//     return res.status(200).json({
-//       message: "Product updated successfully",
-//       success: true,
-//       updatedProduct,
-//     });
-//   } catch (error) {
-//     console.log(error, "Something wrong");
-//     res.status(500).json({
-//       message: "Internal Server Error",
-//       success: false,
-//     });
-//   }
-// };
 
 export const updateProduct = async (req, res) => {
   console.log("Update Product Hitted");
@@ -321,147 +273,22 @@ export const getProductById = async (req, res) => {
   }
 };
 
-// export const updateProductStockAfterOrder = async (orderItems) => {
-//   console.log("hitted updateProductStockAfterOrder");
-//   try {
-//     const updates = orderItems.map(async (item) => {
-//       console.log("item", item);
-
-//       const { product, size, quantity } = item;
-
-//       const soldProduct = await Product.findById(product);
-
-//       if (!soldProduct) {
-//         throw new Error(`Product with ID ${product} not found.`);
-//       }
-
-//       soldProduct.sold += quantity;
-
-//       const sizeObj = soldProduct.sizes.find((s) => s.size === size);
-//       if (sizeObj) {
-//         sizeObj.quantity -= quantity;
-//         if (sizeObj.quantity < 0) {
-//           throw new Error(
-//             `Insufficient quantity for product ${soldProduct.name} in size ${size}.`
-//           );
-//         }
-//       } else {
-//         throw new Error(
-//           `Size ${size} not found for product ${soldProduct.name}.`
-//         );
-//       }
-//       await soldProduct.save();
-//     });
-
-//     await Promise.all(updates);
-
-//     return { success: true, message: "Product stock updated successfully." };
-//   } catch (error) {
-//     return { success: false, message: error.message };
-//   }
-// };
-
-// export const updateProductStockAfterOrder = async (orderItems) => {
-//   console.log("hitted updateProductStockAfterOrder");
-//   try {
-//     const updates = orderItems.map(async (item) => {
-//       console.log("item", item);
-
-//       const { product, size, quantity } = item;
-
-//       const soldProduct = await Product.findById(product);
-
-//       if (!soldProduct) {
-//         throw new Error(`Product with ID ${product} not found.`);
-//       }
-
-//       // Find the size object for the product
-//       const sizeObj = soldProduct.sizes.find((s) => s.size === size);
-//       if (sizeObj) {
-//         // Update the sold count and stock quantity for the specific size
-//         sizeObj.quantity -= quantity;
-//         if (sizeObj.quantity < 0) {
-//           throw new Error(
-//             `Insufficient quantity for product ${soldProduct.name} in size ${size}.`
-//           );
-//         }
-//         // Increase the total sold count by the quantity ordered for this size
-//         soldProduct.sold += quantity;
-//       } else {
-//         throw new Error(
-//           `Size ${size} not found for product ${soldProduct.name}.`
-//         );
-//       }
-
-//       await soldProduct.save();
-//     });
-
-//     await Promise.all(updates);
-
-//     return { success: true, message: "Product stock updated successfully." };
-//   } catch (error) {
-//     return { success: false, message: error.message };
-//   }
-// };
-
-// export const updateProductStockAfterOrder = async (orderItems) => {
-//   console.log("hitted updateProductStockAfterOrder");
-//   try {
-//     const productUpdates = {};
-
-//     // Accumulate updates for each product
-//     orderItems.forEach((item) => {
-//       console.log('item : ',item)
-//       const { product, size, quantity } = item;
-
-//       if (!productUpdates[product]) {
-//         productUpdates[product] = { totalSold: 0, sizeUpdates: [] };
-//       }
-
-//       productUpdates[product].totalSold += quantity;
-//       productUpdates[product].sizeUpdates.push({ size, quantity });
-//     });
-
-//     console.log('productUpdates : ',productUpdates)
-
-//     // Apply updates to each product
-//     const updatePromises = Object.keys(productUpdates).map(async (productId) => {
-//       const soldProduct = await Product.findById(productId);
-
-//       if (!soldProduct) {
-//         throw new Error(`Product with ID ${productId} not found.`);
-//       }
-
-//       // Update sold count
-//       soldProduct.sold += productUpdates[productId].totalSold;
-
-//       // Update stock quantities for each size
-//       productUpdates[productId].sizeUpdates.forEach(({ size, quantity }) => {
-//         const sizeObj = soldProduct.sizes.find((s) => s.size === size);
-//         if (sizeObj) {
-//           sizeObj.quantity -= quantity;
-//           if (sizeObj.quantity < 0) {
-//             throw new Error(
-//               `Insufficient quantity for product ${soldProduct.name} in size ${size}.`
-//             );
-//           }
-//         } else {
-//           throw new Error(
-//             `Size ${size} not found for product ${soldProduct.name}.`
-//           );
-//         }
-//       });
-
-//       await soldProduct.save();
-//     });
-
-//     await Promise.all(updatePromises);
-
-//     return { success: true, message: "Product stock updated successfully." };
-//   } catch (error) {
-//     return { success: false, message: error.message };
-//   }
-// };
+export const getProductBySeller = async (req, res) => {
+  console.log("Get Product by Seller Hitted");
+  try {
+    const sellerId = req.user.data;
+    if (!sellerId) {
+      return res.json({ message: "User Not Found", success: false });
+    }
+    // const { sellerId } = req.params;
+    const products = await Product.find({ seller: sellerId });
+    return res
+      .status(200)
+      .json({ message: "Product found successfully", success: true, products });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
 
 export const updateProductStockAfterOrder = async (orderItems) => {
   console.log("hitted updateProductStockAfterOrder");

@@ -26,6 +26,7 @@ import {
   checkUser,
   getUser,
   logout,
+  sellerRequest,
   signin,
   signup,
   updateUser,
@@ -53,7 +54,7 @@ userRouter.post("/address/add", authenticateUser, addAddress);
 userRouter.get("/address", authenticateUser, getUserAddress);
 userRouter.put("/address/update/:addressId", authenticateUser, updateAddress);
 userRouter.delete(
-  "/address/dalete/:addressId",
+  "/address/delete/:addressId",
   authenticateUser,
   deleteAddress
 );
@@ -77,15 +78,14 @@ userRouter.post("/clear-coupon", clearCoupon);
 userRouter.get("/my-orders", authenticateUser, getAllOrders);
 userRouter.get("/order-summary/:id", authenticateUser, getOrderById);
 
-
-
 userRouter.get("/my-reviews", authenticateUser, getUserReviews);
 // userRouter.get("/product/my-reviews/", authenticateUser, getReviewByProduct);
 userRouter.post("/my-reviews/add/:id", authenticateUser, addReview);
 userRouter.put("/my-reviews/update/:id", authenticateUser, updateReview);
 userRouter.delete("/my-reviews/delete/:id", authenticateUser, deleteReview);
-userRouter.get("/reviews/:id",getReviewByProduct );
+userRouter.get("/reviews/:id", getReviewByProduct);
 
 userRouter.get("/check-user", preventAuthenticatedAccess, checkUser);
+userRouter.post("/seller-request", authenticateUser, sellerRequest);
 
 export default userRouter;

@@ -12,11 +12,11 @@ authRouter.get(
 
 authRouter.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "https://fashion-oasis-frontend.vercel.app/signin" }),
+  passport.authenticate("google", { failureRedirect: "http://localhost:5173/signin" }),
   (req, res) => {
     const token = req.user.token;
     res.cookie("token", token, { httpOnly: true, secure: true });
-    res.redirect("https://fashion-oasis-frontend.vercel.app/user/profile");
+    res.redirect("http://localhost:5173/user/profile");
   }
 );
 
@@ -39,17 +39,17 @@ authRouter.get('/github', passport.authenticate('github', { scope: ['user:email'
 
 authRouter.get(
   '/github/callback',
-  passport.authenticate('github', { failureRedirect: 'https://fashion-oasis-frontend.vercel.app/signin' }),
+  passport.authenticate('github', { failureRedirect: 'http://localhost:5173/signin' }),
   (req, res) => {
     const token = req.user.token;
     res.cookie("token", token, { httpOnly: true, secure: true });
-    res.redirect("https://fashion-oasis-frontend.vercel.app/user/profile");
+    res.redirect("http://localhost:5173/user/profile");
   }
 );
 
 // googleRouter.get("/logout", (req, res) => {
 //   req.logout();
-//   res.redirect("https://fashion-oasis-frontend.vercel.app/");
+//   res.redirect("http://localhost:5173/");
 // });
 
 // googleRouter.get("/current_user", (req, res) => {

@@ -104,7 +104,7 @@ paymentRouter.post("/verify", authenticateUser, async (req, res) => {
       }
 
       const order = new Order({
-        user: req.user.data,
+        customer: req.user.data,
         products: cart.products,
         totalAmount: totalPrice,
         totalQuantity,

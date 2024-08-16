@@ -1,8 +1,12 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     products: [
       {
         product: {
@@ -11,7 +15,7 @@ const orderSchema = new mongoose.Schema(
           required: true,
         },
         quantity: { type: Number, required: true },
-        size : String
+        size: String,
       },
     ],
     totalAmount: { type: Number, required: true },
@@ -41,7 +45,13 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      enum: [ "order-placed","processing", "on-the-way", "delivered", "cancelled"],
+      enum: [
+        "order-placed",
+        "processing",
+        "on-the-way",
+        "delivered",
+        "cancelled",
+      ],
       default: "order-placed",
     },
     shippingAddress: {
@@ -54,13 +64,13 @@ const orderSchema = new mongoose.Schema(
       enum: ["free", "fast"],
       default: "free",
     },
-    orderId : {
+    orderId: {
       type: String,
-    }
+    },
   },
   { timestamps: true }
 );
 
 const Order = mongoose.model("Order", orderSchema);
 
-export default Order
+export default Order;

@@ -4,7 +4,7 @@ const reviewSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
+      ref: "User",
       required: true,
     },
     userDelails: {
